@@ -1,4 +1,4 @@
-export function getAvg(scores){
+export default function getAvg(scores){
     return getTotalScore(scores);
 }
 
