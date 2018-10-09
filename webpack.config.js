@@ -2,11 +2,15 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 var MiniCssExtractPlugin = require('mini-css-extract-plugin');
 var webpack = require('webpack');
 
+var path = require('path');
+var basePath = __dirname;
+
 module.exports = {
+    context: path.join(basePath, 'src'),
     entry: {
         app: './index.js',
         appStyles: [
-            './styles.css',
+            './styles.scss',
         ],
         vendor:[
             '@babel/polyfill',
@@ -34,6 +38,14 @@ module.exports = {
                 test: /\.js$/,
                 exclude: /node_modules/,
                 loader: 'babel-loader',                
+            },
+            {
+                test:/\.scss$/,
+                use: [                   
+                    MiniCssExtractPlugin.loader, 
+                    "css-loader",
+                    "sass-loader"
+                ],
             },
             {
                 test: /\.css$/,
