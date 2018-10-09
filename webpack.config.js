@@ -1,27 +1,54 @@
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var MiniCssExtractPlugin = require('mini-css-extract-plugin');
 var webpack = require('webpack');
 
 module.exports = {
-    entry: [
-        '@babel/polyfill',
-        './index.js'
-    ],
+    entry: {
+        app: './index.js',
+        appStyles: [
+            './styles.css',
+        ],
+        vendor:[
+            '@babel/polyfill',
+            'jquery'
+        ],
+    },      
     output: {
-        filename: 'bundle.js',
+        filename: '[name].[chunkhash].js',
+    },
+    optimization:{
+        splitChunks: {
+            cacheGroups:{
+                vendor:{
+                    chunks: 'initial',
+                    name: 'vendor',
+                    test: 'vendor',
+                    enforce: true, 
+                }
+            }
+        }
     },
     module: {
         rules: [
             {
                 test: /\.js$/,
                 exclude: /node_modules/,
-                loader: 'babel-loader',
+                loader: 'babel-loader',                
+            },
+            {
+                test: /\.css$/,
+                exclude: /node_modules/,
+                use: [                   
+                    MiniCssExtractPlugin.loader, 
+                    "css-loader"
+                ],
             },
         ],
     },
-    devServer : {
+    devServer: {
         port: 8080,
     },
-    plugins:[
+    plugins: [
         //Generate index.html in /dist => https://github.com/ampedandwired/html-webpack-plugin
         new HtmlWebpackPlugin({
             filename: 'index.html', //Name of file in ./dist
@@ -31,6 +58,10 @@ module.exports = {
         new webpack.ProvidePlugin({
             $: 'jquery',
             jQuery: 'jquery'
+        }),
+        new MiniCssExtractPlugin({
+            filename: '[name].css',
+            chunkFilename: "[id].css"
         }),
     ]
 };
