@@ -2,13 +2,30 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 var webpack = require('webpack');
 
 module.exports = {
-    entry: [
-        '@babel/polyfill',
-        './index.js',
-        './styles.css'
-    ],
+    entry: {
+        app: './index.js',
+        appStyles: [
+            './styles.css',
+        ],
+        vendor:[
+            '@babel/polyfill',
+            'jquery'
+        ],
+    },      
     output: {
-        filename: 'bundle.js',
+        filename: '[name].[chunkhash].js',
+    },
+    optimization:{
+        splitChunks: {
+            cacheGroups:{
+                vendor:{
+                    chunks: 'initial',
+                    name: 'vendor',
+                    test: 'vendor',
+                    enforce: true, 
+                }
+            }
+        }
     },
     module: {
         rules: [
