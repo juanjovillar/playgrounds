@@ -6,6 +6,7 @@ var path = require('path');
 var basePath = __dirname;
 
 module.exports = {
+    context: path.join(basePath, 'src'),
     entry: {
         app: './index.js',
         appStyles: [
