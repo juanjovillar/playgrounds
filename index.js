@@ -1,5 +1,7 @@
 import * as averageService from "./service";
 
+$('body').css('background-color', 'lightSkyBlue');
+
 const scores = [1, 5, 10, 20];
 const totalScore = averageService.getTotalScore(scores);
 const averageSCore = averageService.getAvg(scores);

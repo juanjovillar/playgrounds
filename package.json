@@ -20,7 +20,8 @@
   },
   "homepage": "https://github.com/juanjovillar/playgrounds#readme",
   "dependencies": {
-    "@babel/polyfill": "^7.0.0"
+    "@babel/polyfill": "^7.0.0",
+    "jquery": "^3.3.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.1.2",
